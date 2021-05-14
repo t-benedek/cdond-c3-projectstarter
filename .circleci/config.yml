@@ -1,5 +1,10 @@
 version: 2.1
 
+# My standard docker for node js used in compile & test of frontend and backend
+docker-def: &docker-def
+    docker:
+      - image: circleci/node:13.8.0
+
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -34,8 +39,7 @@ commands:
             
 jobs:
   build-frontend:
-    docker:
-      - image: circleci/node:13.8.0
+    <<: *docker-def
     steps:
       - checkout
       - restore_cache:
@@ -43,6 +47,7 @@ jobs:
       - run:
           name: Build front-end
           command: |
+            npm install
             cd frontend
             npm i
             npm run build
@@ -57,8 +62,7 @@ jobs:
           key: frontend-build
 
   build-backend:
-    docker:
-      - image: circleci/node:13.8.0
+    <<: *docker-def
     steps:
       - checkout
       - restore_cache:
@@ -66,6 +70,7 @@ jobs:
       - run:
           name: Back-end build
           command: |
+            npm install
             cd backend
             npm i
             npm run build
@@ -79,22 +84,40 @@ jobs:
           paths: [backend/node_modules]
           key: backend-build
 
-#   test-frontend:
-#     docker:
-#       # Docker image here
-#     steps:
-#       # Checkout code from git
-#       # Restore from cache
-#       # Your job code here
-                
-#   test-backend:
-#     docker:
-#       # Docker image here
-#     steps:
-#       # Checkout code from git
-#       # Restore from cache
-#       # Your job code here
-            
+  test-frontend:
+    <<: *docker-def
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: run lint and unit tests
+          command: |
+            npm run lint
+            npm run test
+      - run: 
+          name: Exeption handling
+          command: |
+            echo "Testing FRONTEND failed !!! "
+            exit 1
+          when: on_fail         
+  test-backend:
+    <<: *docker-def
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: run lint and unit tests
+          command: |
+            npm run lint
+            npm run test
+      - run: 
+          name: Exeption handling
+          command: |
+            echo "Testing BACKEND failed !!! "
+            exit 1
+          when: on_fail             
 #   scan-frontend:
 #     docker:
 #       # Docker image here
