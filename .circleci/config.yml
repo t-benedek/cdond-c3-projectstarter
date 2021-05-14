@@ -122,43 +122,45 @@ jobs:
             exit 1
           when: on_fail             
   
-  # scan-frontend:
-  #   <<: *docker-def
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys: [frontend-build]
-  #     - run:
-  #         name: run vulnerability tests
-  #         command: |
-  #           npm install
-  #           cd frontend
-  #           npm audit --audit-level=critical
-  #     - run: 
-  #         name: Exeption handling
-  #         command: |
-  #           echo "Auditing frontend failed !!! "
-  #           exit 1
-  #         when: on_fail    
+  scan-frontend:
+    <<: *docker-def
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: run vulnerability tests
+          command: |
+            cd frontend
+            npm install
+            npm install oauth-sign
+            npm audit --audit-level=critical
+      - run: 
+          name: Exeption handling
+          command: |
+            echo "Auditing frontend failed !!! "
+            exit 1
+          when: on_fail    
 
-  # scan-backend:
-  #   <<: *docker-def
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys: [backend-build]
-  #     - run:
-  #         name: run vulnerability tests
-  #         command: |
-  #           npm install
-  #           cd backend
-  #           npm audit --audit-level=critical
-  #     - run: 
-  #         name: Exeption handling
-  #         command: |
-  #           echo "Auditing backend failed !!! "
-  #           exit 1
-  #         when: on_fail    
+  scan-backend:
+    <<: *docker-def
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: run vulnerability tests
+          command: |
+            cd backend
+            npm install
+            npm install oauth-sign
+            npm audit --audit-level=critical
+      - run: 
+          name: Exeption handling
+          command: |
+            echo "Auditing backend failed !!! "
+            exit 1
+          when: on_fail    
 
 #   deploy-infrastructure:
 #     docker:
@@ -335,10 +337,10 @@ workflows:
           requires: [build-frontend]
       - test-backend:
           requires: [build-backend]
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
       # - deploy-infrastructure:
       #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       #     filters:
