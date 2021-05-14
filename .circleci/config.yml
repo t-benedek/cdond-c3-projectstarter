@@ -93,6 +93,8 @@ jobs:
       - run:
           name: run lint and unit tests
           command: |
+            npm install
+            cd frontend
             npm run lint
             npm run test
       - run: 
@@ -110,6 +112,8 @@ jobs:
       - run:
           name: run lint and unit tests
           command: |
+            npm install
+            cd backend
             npm run lint
             npm run test
       - run: 
