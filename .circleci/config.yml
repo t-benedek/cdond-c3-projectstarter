@@ -215,9 +215,9 @@ jobs:
               --filters "Name=tag:project,Values=udapeople" \
               --output text >> .circleci/ansible/inventory.txt
       - persist_to_workspace:
-          root: ~/
+          root: .circleci/ansible/
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - inventory.txt
       - run: pwd
       - run: cat .circleci/ansible/inventory.txt
       - destroy-environment     
