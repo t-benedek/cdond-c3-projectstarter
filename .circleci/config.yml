@@ -47,7 +47,6 @@ jobs:
       - run:
           name: Build front-end
           command: |
-            npm install
             cd frontend
             npm i
             npm run build
@@ -70,7 +69,6 @@ jobs:
       - run:
           name: Back-end build
           command: |
-            npm install
             cd backend
             npm i
             npm run build
@@ -95,6 +93,7 @@ jobs:
           command: |
             cd frontend
             npm install
+            npm install oauth-sign
             npm run test
       - run: 
           name: Exeption handling
@@ -112,8 +111,8 @@ jobs:
       - run:
           name: run lint and unit tests
           command: |
-            npm install
             cd backend
+            npm install
             npm run test
       - run: 
           name: Exeption handling
