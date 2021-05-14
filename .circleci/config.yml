@@ -62,9 +62,11 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
+          channel: udacity
       - slack/notify:
           event: pass    
           template: basic_success_1      
+          channel: udacity
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
