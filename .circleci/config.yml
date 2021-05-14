@@ -93,8 +93,8 @@ jobs:
       - run:
           name: run unit tests
           command: |
-            npm install -g jest
             cd frontend
+            npm install
             npm run test
       - run: 
           name: Exeption handling
