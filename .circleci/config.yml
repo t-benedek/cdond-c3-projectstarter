@@ -246,29 +246,13 @@ jobs:
             && pip3 install \
             awscli \
             && rm -rf /var/cache/apk/*
+      - run: pwd
+      - run: cat .circleci/ansible/inventory.txt
       - run:
           name: Configure server
           no_output_timeout: 30m
           command: |
             ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
-
-#   configure-infrastructure:
-#     docker:
-#       - image: python:3.7-alpine3.11
-#     steps:
-#       - checkout
-#       - add_ssh_keys:
-#          fingerprints: ["06:7c:db:71:49:2f:03:36:60:08:d2:fd:33:6f:17:d3"] 
-#       # attach workspace
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             apk add --update ansible
-#       - run:
-#           name: Configure server
-#           command: |
-#             ansible-playbook -i inventory.txt playbook.yml
-#       # Here's where you will add some code to rollback on failure      
 
 #   run-migrations:
 #     docker:
