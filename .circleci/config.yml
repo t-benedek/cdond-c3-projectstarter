@@ -47,10 +47,10 @@ jobs:
             npm i
             npm run build
       - run: 
-        name: Exeption handling
-        command: |
-          echo "Building FRONTEND failed !!! "
-          exit 1
+          name: Exeption handling
+          command: |
+            echo "Building FRONTEND failed !!! "
+            exit 1
         when: on_fail
       - save_cache:
           paths: [frontend/node_modules]
@@ -70,10 +70,10 @@ jobs:
             npm i
             npm run build
       - run: 
-        name: Exeption handling
-        command: |
-          echo "Building BACKEND failed !!! "
-          exit 1
+          name: Exeption handling
+          command: |
+            echo "Building BACKEND failed !!! "
+            exit 1
         when: on_fail
       - save_cache:
           paths: [backend/node_modules]
