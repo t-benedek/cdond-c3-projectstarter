@@ -46,6 +46,12 @@ jobs:
             cd frontend
             npm i
             npm run build
+      - run: 
+        name: Exeption handling
+        command: |
+          echo "Building FRONTEND failed !!! "
+          exit 1
+        when: on_fail
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -63,6 +69,12 @@ jobs:
             cd backend
             npm i
             npm run build
+      - run: 
+        name: Exeption handling
+        command: |
+          echo "Building BACKEND failed !!! "
+          exit 1
+        when: on_fail
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
