@@ -198,11 +198,11 @@ jobs:
       # - run:
       #     name: Add back-end ip to ansible inventory
       #     command: |
-      #       echo echo [all] > inventory
+      #       echo echo [all] > inventory.txt
       #       aws ec2 describe-instances \
       #         --query 'Reservations[*].Instances[*].PublicIpAddress' \
       #         --filters "Name=tag:project,Values=udapeople" \
-      #         --output text >> inventory
+      #         --output text >> inventory.txt
       # - persist_to_workspace:
       #     root: ~/
       #     paths:
@@ -231,7 +231,7 @@ jobs:
 #     docker:
 #       # Docker image here that supports NodeJS
 #     steps:
-#       # Checkout code from git
+#       - checkout
 #       - run:
 #           name: Run migrations
 #           command: |
