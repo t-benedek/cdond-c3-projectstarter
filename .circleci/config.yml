@@ -95,7 +95,6 @@ jobs:
           command: |
             npm install
             cd frontend
-            npm run lint
             npm run test
       - run: 
           name: Exeption handling
@@ -114,7 +113,6 @@ jobs:
           command: |
             npm install
             cd backend
-            npm run lint
             npm run test
       - run: 
           name: Exeption handling
