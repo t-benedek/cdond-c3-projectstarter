@@ -91,9 +91,9 @@ jobs:
       - restore_cache:
           keys: [frontend-build]
       - run:
-          name: run lint and unit tests
+          name: run unit tests
           command: |
-            npm install
+            npm install -g jest
             cd frontend
             npm run test
       - run: 
@@ -102,6 +102,7 @@ jobs:
             echo "Testing FRONTEND failed !!! "
             exit 1
           when: on_fail         
+  
   test-backend:
     <<: *docker-def
     steps:
@@ -120,21 +121,44 @@ jobs:
             echo "Testing BACKEND failed !!! "
             exit 1
           when: on_fail             
-#   scan-frontend:
-#     docker:
-#       # Docker image here
-#     steps:
-#       # Checkout code from git
-#       # Restore from cache
-#       # Your job code here
+  
+  # scan-frontend:
+  #   <<: *docker-def
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys: [frontend-build]
+  #     - run:
+  #         name: run vulnerability tests
+  #         command: |
+  #           npm install
+  #           cd frontend
+  #           npm audit --audit-level=critical
+  #     - run: 
+  #         name: Exeption handling
+  #         command: |
+  #           echo "Auditing frontend failed !!! "
+  #           exit 1
+  #         when: on_fail    
 
-#   scan-backend:
-#     docker:
-#       # Docker image here
-#     steps:
-#       # Checkout code from git
-#       # Restore from cache
-#       # Your job code here
+  # scan-backend:
+  #   <<: *docker-def
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys: [backend-build]
+  #     - run:
+  #         name: run vulnerability tests
+  #         command: |
+  #           npm install
+  #           cd backend
+  #           npm audit --audit-level=critical
+  #     - run: 
+  #         name: Exeption handling
+  #         command: |
+  #           echo "Auditing backend failed !!! "
+  #           exit 1
+  #         when: on_fail    
 
 #   deploy-infrastructure:
 #     docker:
@@ -306,11 +330,11 @@ workflows:
   default:
     jobs:
       - build-frontend
-      - build-backend
+      # - build-backend
       - test-frontend:
           requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
+      # - test-backend:
+      #     requires: [build-backend]
       # - scan-backend:
       #     requires: [build-backend]
       # - scan-frontend:
