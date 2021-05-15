@@ -20,6 +20,7 @@
     npm run build
     npm audit fix --audit-level=critical
 - name: "run migrations again"
+  # TODO is this really needed?
   shell: |
     cd /home/ubuntu/backend
     npm run migrations
