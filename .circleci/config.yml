@@ -378,7 +378,6 @@ jobs:
           no_output_timeout: 30m
           command: |
             apk add --update tar gzip ansible nodejs npm
-            apk add openssh-client
             pip install awscli
       - run:
           name: deploy backend
