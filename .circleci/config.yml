@@ -430,19 +430,23 @@ jobs:
             backend_ip=$(cat .circleci/ansible/backendip)
             echo "http://$backend_ip:3030"
             curl "http://$backend_ip:3030/api/status"
+            if curl -s "http://$backend_ip:3030/api/status" | grep "ok"
+            then
+              echo "Backend alive, Proceeding"
+            else
+              return 1
+            fi
       - run:
           name: Frontend smoke test.
           command: |
             if curl -s  "http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-west-2.amazonaws.com" | grep "Welcome"
             then
-              return 0
+              return 1
             else
               return 1
             fi
-      # TODO
-      # - destroy-environment
-      # - revert-migrations
-      # Here's where you will add some code to rollback on failure
+      - destroy-environment
+      - revert-migrations
 
   cloudfront-update:
     docker:
