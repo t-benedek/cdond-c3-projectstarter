@@ -397,7 +397,7 @@ jobs:
             cd .circleci/ansible
             pwd
             ls -la
-            ansible-playbook -i ~/project/inventory deploy-backend.yml
+            ansible-playbook -i ~/project/inventory.txt deploy-backend.yml
       - amazonservices
       - run: cat .circleci/ansible/inventory.txt
       - run:
