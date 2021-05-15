@@ -481,7 +481,7 @@ jobs:
       - run:
           name: Get old stack workflow id
           command: |
-            export OldWorkflowID=86c6ecd
+            export OldWorkflowID="86c6ecd"
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
               --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
       - run:
