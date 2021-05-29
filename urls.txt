@@ -1,5 +1,5 @@
 [URL01]: https://github.com/t-benedek/cdond-c3-projectstarter
-[URL02]: http://udapeople-fdde527.s3-website-us-west-2.amazonaws.com (current state, changed after smoketest task)
+[URL02]: http://udapeople-8b91cdb.s3-website-us-west-2.amazonaws.com (Updated S3 Bucket URL)s
 [URL03]: http://d3j602olmt234h.cloudfront.net/ (URL for handling employees, Test employee see SCREENSHOT)
 [URL04]: http://ec2-54-188-35-10.us-west-2.compute.amazonaws.com:3030/api/status (API Status is ok)
 [URL05]: http://ec2-34-217-212-168.us-west-2.compute.amazonaws.com:9090 (Prometheus Server)
